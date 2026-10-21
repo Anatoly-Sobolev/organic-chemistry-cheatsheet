@@ -12,9 +12,24 @@ body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 system-ui,-app
 header{background:linear-gradient(120deg,#4f46e5,#7c3aed 55%,#0e9aa7);color:#fff;padding:26px 20px 64px;text-align:center;position:relative;overflow:hidden}
 header h1{margin:0 0 6px;font-size:clamp(24px,5vw,38px);position:relative}
 header p{margin:0;opacity:.92;position:relative}
-header .by{margin-top:12px;font-size:15px}
-header .by a{display:inline-block;margin-left:6px;padding:5px 14px;border-radius:999px;background:#fff;color:#4f46e5;font-weight:700;text-decoration:none;transition:.2s}
-header .by a:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.25)}
+header .tutor{position:relative;display:inline-flex;align-items:center;gap:16px;margin-top:14px;padding:10px 22px 10px 10px;border-radius:999px;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);color:#fff;text-decoration:none;text-align:left;transition:.25s;backdrop-filter:blur(4px)}
+header .tutor:hover{background:rgba(255,255,255,.26);transform:translateY(-2px);box-shadow:0 10px 26px rgba(0,0,0,.25)}
+header .tutor img{width:74px;height:74px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 14px rgba(0,0,0,.3);flex:none}
+header .tt{display:flex;flex-direction:column;line-height:1.3}
+header .tt small{opacity:.85;font-size:12px}
+header .tt b{font-size:18px}
+header .tt em{font-style:normal;opacity:.95;font-size:14px}
+header .go{margin-top:6px;align-self:flex-start;padding:3px 12px;border-radius:999px;background:#fff;color:#4f46e5;font-weight:700;font-size:13px}
+@media(max-width:520px){header .tutor{border-radius:24px}header .tutor img{width:60px;height:60px}header .tt b{font-size:15px}}
+.sc-wrap canvas{width:100%;aspect-ratio:640/340;display:block;border-radius:14px;background:#f4f6ff;border:1px solid var(--line)}
+.sc-ctl{display:flex;gap:10px;align-items:center;margin:10px 0}
+.sc-ctl input{flex:1;accent-color:var(--acc)}
+.sc-ctl select{padding:7px;border-radius:10px;border:1px solid var(--line);font:inherit}
+ol.steps{list-style:none;margin:6px 0 0;padding:0;counter-reset:s}
+ol.steps li{counter-increment:s;padding:8px 12px 8px 44px;position:relative;border-radius:10px;color:var(--mute);transition:.3s}
+ol.steps li:before{content:counter(s);position:absolute;left:10px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--line);color:var(--mute);display:grid;place-items:center;font-size:13px;font-weight:700;transition:.3s}
+ol.steps li.on{background:var(--acc2);color:var(--ink);font-weight:600}
+ol.steps li.on:before{background:var(--acc);color:#fff;transform:scale(1.15)}
 header i{position:absolute;border-radius:50%;background:rgba(255,255,255,.12);animation:drift 9s ease-in-out infinite}
 @keyframes drift{50%{transform:translate(18px,-14px) scale(1.15)}}
 nav{position:sticky;top:0;z-index:10;background:rgba(243,245,251,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);margin-top:-40px}
@@ -130,7 +145,9 @@ summary{cursor:pointer;padding:12px 0;font-weight:600}
 <body>
 <header><i style="width:90px;height:90px;left:6%;top:10%"></i><i style="width:60px;height:60px;right:10%;top:30%;animation-delay:2s"></i><i style="width:120px;height:120px;right:28%;bottom:-40px;animation-delay:4s"></i>
 <h1>🧪 Органическая химия за один вечер</h1>
-<p class="by">Подготовила <b>Соболева Екатерина Олеговна</b>, репетитор по химии · <a href="https://vk.ru/e.sob2000" target="_blank" rel="noopener">Связаться с репетитором ВКонтакте →</a></p></header>
+<a class="tutor" href="https://vk.ru/e.sob2000" target="_blank" rel="noopener" title="Открыть страницу репетитора ВКонтакте">
+<img src="data:image/jpeg;base64,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" alt="Соболева Екатерина Олеговна">
+<span class="tt"><small>Подготовила</small><b>Соболева Екатерина Олеговна</b><em>репетитор по химии</em><span class="go">Связаться ВКонтакте →</span></span></a></header>
 <button id="fsBtn" onclick="toggleFs()" title="Полноэкранный режим (F)">⛶ На весь экран</button>
 <nav><div class="in" id="tabs"></div></nav>
 <main>
@@ -316,47 +333,8 @@ summary{cursor:pointer;padding:12px 0;font-weight:600}
 <section id="s-rx" data-ic="⚗️" data-title="Реакции">
 <div class="hd"><div class="ic">⚗️</div><div><h2>Типы реакций</h2><p>Три типа — три «сценария»</p></div></div>
 <div class="simple"><div class="e">💡</div><div><b>Простыми словами.</b> Замещение — «поменяли деталь». Присоединение — «добавили деталь по двойной связи». Отщепление — «убрали деталь, появилась двойная связь». Запусти анимации и посмотри.</div></div>
-<div class="grid w">
-<div class="card anim"><div><span class="tag t1">Замещение</span> атом заменяется на другой</div>
-<svg viewBox="0 0 300 150" class="a-sub" id="an1"><g transform="translate(40,75)"><circle r="20" fill="#4b5563"/><text y="6" text-anchor="middle" fill="#fff" font-weight="700">C</text><line x1="20" y1="0" x2="60" y2="0" stroke="#1e2433" stroke-width="3"/></g>
-<g class="h"><circle cx="120" cy="75" r="13" fill="#fff" stroke="#667085" stroke-width="2"/><text x="120" y="80" text-anchor="middle" font-size="14">H</text></g>
-<g class="cl"><circle cx="250" cy="75" r="18" fill="#22c55e"/><text x="250" y="81" text-anchor="middle" fill="#fff" font-weight="700">Cl</text></g></svg>
-<div class="row"><button class="btn ghost" onclick="pauseA('an1',this)">⏸ Пауза</button><button class="btn ghost" onclick="restartA('an1')">↻ Заново</button></div>
-<small>CH₄ + Cl₂ → CH₃Cl + HCl. Хлор «выбивает» водород и садится на его место; водород уходит в виде HCl.</small></div>
-<div class="card anim"><div><span class="tag t2">Присоединение</span> по двойной связи «садятся» атомы</div>
-<svg viewBox="0 0 300 150" class="a-add" id="an2"><g transform="translate(90,75)"><circle r="20" fill="#4b5563"/><text y="6" text-anchor="middle" fill="#fff" font-weight="700">C</text></g>
-<g transform="translate(210,75)"><circle r="20" fill="#4b5563"/><text y="6" text-anchor="middle" fill="#fff" font-weight="700">C</text></g>
-<line x1="110" y1="75" x2="190" y2="75" stroke="#1e2433" stroke-width="3"/>
-<g class="dbl"><line x1="110" y1="85" x2="190" y2="85" stroke="#7c3aed" stroke-width="3"/></g>
-<g class="h1"><circle cx="150" cy="20" r="13" fill="#fff" stroke="#667085" stroke-width="2"/><text x="150" y="25" text-anchor="middle" font-size="14">H</text></g>
-<g class="h2"><circle cx="150" cy="130" r="13" fill="#fff" stroke="#667085" stroke-width="2"/><text x="150" y="135" text-anchor="middle" font-size="14">H</text></g></svg>
-<div class="row"><button class="btn ghost" onclick="pauseA('an2',this)">⏸ Пауза</button><button class="btn ghost" onclick="restartA('an2')">↻ Заново</button></div>
-<small>CH₂=CH₂ + H₂ → CH₃–CH₃. Слабая π-связь рвётся, на её месте появляются две новые связи с H.</small></div>
-<div class="card anim"><div><span class="tag t3">Отщепление</span> уходит малая молекула</div>
-<svg viewBox="0 0 300 150" class="a-el" id="an3"><g transform="translate(90,75)"><circle r="20" fill="#4b5563"/><text y="6" text-anchor="middle" fill="#fff" font-weight="700">C</text></g>
-<g transform="translate(210,75)"><circle r="20" fill="#4b5563"/><text y="6" text-anchor="middle" fill="#fff" font-weight="700">C</text></g>
-<line x1="110" y1="75" x2="190" y2="75" stroke="#1e2433" stroke-width="3"/>
-<g class="dbl"><line x1="110" y1="85" x2="190" y2="85" stroke="#d97706" stroke-width="3"/></g>
-<g class="oh"><circle cx="90" cy="35" r="15" fill="#ef4444"/><text x="90" y="40" text-anchor="middle" fill="#fff" font-size="12" font-weight="700">OH</text></g>
-<g class="hh"><circle cx="210" cy="35" r="13" fill="#fff" stroke="#667085" stroke-width="2"/><text x="210" y="40" text-anchor="middle" font-size="14">H</text></g></svg>
-<div class="row"><button class="btn ghost" onclick="pauseA('an3',this)">⏸ Пауза</button><button class="btn ghost" onclick="restartA('an3')">↻ Заново</button></div>
-<small>CH₃CH₂OH → CH₂=CH₂ + H₂O. OH и H с соседних атомов уходят вместе (как вода), и между C появляется двойная связь.</small></div>
-</div>
-
-<h3>Правило Марковникова в движении</h3>
-<div class="card">
-<svg viewBox="0 0 400 190" class="mini" style="height:auto;max-height:240px">
-<line x1="80" y1="120" x2="180" y2="120" stroke="#1e2433" stroke-width="3"/><line x1="80" y1="130" x2="180" y2="130" stroke="#7c3aed" stroke-width="3" id="mkDbl"/><line x1="180" y1="120" x2="280" y2="120" stroke="#1e2433" stroke-width="3"/>
-<g><circle cx="80" cy="125" r="24" fill="#4b5563"/><text x="80" y="131" text-anchor="middle" fill="#fff" font-weight="700">CH₂</text></g>
-<g><circle cx="180" cy="125" r="24" fill="#4b5563"/><text x="180" y="131" text-anchor="middle" fill="#fff" font-weight="700">CH</text></g>
-<g><circle cx="280" cy="125" r="24" fill="#4b5563"/><text x="280" y="131" text-anchor="middle" fill="#fff" font-weight="700">CH₃</text></g>
-<g class="fly" id="mkH" style="transform:translate(0,0)"><circle cx="230" cy="30" r="13" fill="#fff" stroke="#667085" stroke-width="2"/><text x="230" y="35" text-anchor="middle" font-size="14">H</text></g>
-<g class="fly" id="mkBr" style="transform:translate(0,0)"><circle cx="290" cy="30" r="17" fill="#b45309"/><text x="290" y="36" text-anchor="middle" fill="#fff" font-weight="700">Br</text></g>
-<line x1="243" y1="30" x2="273" y2="30" stroke="#1e2433" stroke-width="2" id="mkHB"/>
-</svg>
-<div class="row" style="justify-content:center"><button class="btn" onclick="mark()">▶ Присоединить HBr к пропену</button><button class="btn ghost" onclick="markReset()">↻ Сброс</button></div>
-<div class="ok" id="mkTxt">Пропен CH₂=CH–CH₃ + HBr. Куда сядет водород?</div>
-<p style="margin:0;color:var(--mute)"><b>Правило:</b> водород идёт к тому атому C при двойной связи, у которого водородов уже <u>больше</u> (CH₂), а Br — к «менее гидрированному» (CH). «Богатый богатеет».</p></div>
+<div class="chips" id="scChips"></div>
+<div class="card"><h3 id="scTitle" style="margin:0 0 10px"></h3><div id="scHost"></div></div>
 <div class="grid">
 <div class="card"><b>Правило Зайцева</b><br>При отщеплении HBr двойная связь образуется у <u>менее гидрированного</u> соседнего C. 2-бромбутан → преимущественно <b>бутен-2</b>.</div>
 <div class="card"><b>Как не ошибиться в условиях</b><br>hν (свет) — замещение в алканах · Ni, t — гидрирование · H⁺ — гидратация · спиртовой KOH — отщепление HBr · конц. H₂SO₄ и t — дегидратация.</div>
@@ -395,7 +373,7 @@ const io='IntersectionObserver' in window?new IntersectionObserver(es=>es.forEac
 function reveal(sec){sec.querySelectorAll('.card,.flip,details,.tw,.simple,.tip').forEach((e,i)=>{if(e.classList.contains('rv'))return;e.classList.add('rv');e.style.transitionDelay=Math.min(i%6,5)*.05+'s';io?io.observe(e):e.classList.add('in')})}
 function show(i){secs.forEach((s,j)=>s.classList.toggle('on',i===j));[...tabs.children].forEach((b,j)=>b.classList.toggle('on',i===j));
  history.replaceState(null,'','#'+secs[i].id);window.scrollTo({top:0,behavior:'smooth'});reveal(secs[i]);
- const id=secs[i].id;if(id==='s-mol')countUp();if(id==='s-hy')setHy(hyCur);if(id==='s-start')molShow(molCur);if(id==='s-iso')mpInit(mpMode);if(id==='s-qz'&&!qzS.started)qzStart()}
+ const id=secs[i].id;if(id==='s-mol')countUp();if(id==='s-hy')setHy(hyCur);if(id==='s-start')molShow(molCur);if(id==='s-iso')mpInit(mpMode);if(id==='s-qz'&&!qzS.started)qzStart();if(id==='s-rx')rxInit()}
 /* ---------- molecule builder ---------- */
 const col={C:['#4b5563','#fff',22],H:['#fff','#1e2433',14],O:['#ef4444','#fff',20],N:['#3b82f6','#fff',20]};
 const mols={'Метан CH₄':{a:[['C',170,100],['H',110,45],['H',230,45],['H',110,155],['H',230,155]],b:[[0,1,1],[0,2,1],[0,3,1],[0,4,1]],t:'У C четыре связи — к нему присоединились 4 атома H (у каждого одна).'},
@@ -581,6 +559,106 @@ $('#cheat').innerHTML=ch.map((c,i)=>`<div class="card"><b><span class="num">${i+
 const todo=['Знаю валентности C, H, O, N','Могу назвать 4 положения Бутлерова','Различаю sp³, sp², sp и углы','Помню общие формулы классов','Отличаю гомологи от изомеров','Знаю 6 видов изомерии','Разбираю молекулу: ст. окисления, σ/π','Знаю три типа реакций и правила Марковникова и Зайцева'];
 $('#check').innerHTML=todo.map(t=>`<label style="display:block;margin:6px 0;cursor:pointer"><input type="checkbox" onchange="upd()"> ${t}</label>`).join('');
 function upd(){const a=document.querySelectorAll('#check input');const n=[...a].filter(x=>x.checked).length;$('#chBar').style.width=(n/a.length*100)+'%';$('#chTxt').textContent=n===a.length?'🎉 Всё отмечено — ты готов(а)!':`Готово ${n} из ${a.length}`}
+/* ---------- reaction animation engine (canvas) ---------- */
+const EL={C:{c:'#3a3f4b',r:24,t:'#fff'},H:{c:'#f2f5f9',r:15,t:'#1e2433'},O:{c:'#e53935',r:21,t:'#fff'},Cl:{c:'#2fb344',r:22,t:'#fff'},Br:{c:'#a0522d',r:24,t:'#fff'},G:{c:'#3a3f4b',r:30,t:'#fff'}};
+const lrp=(a,b,p)=>a+(b-a)*p;
+const clamp01=x=>Math.max(0,Math.min(1,x));
+const easeIO=u=>u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2;
+const kf=(a,i)=>a[Math.min(i,a.length-1)];
+const bump=(t,a,b)=>t<=a||t>=b?0:Math.sin(Math.PI*(t-a)/(b-a));
+const SCN=[];
+(function loop(ts){SCN.forEach(s=>{if(s.host.offsetParent)s.frame(ts)});requestAnimationFrame(loop)})(0);
+function Scene(host,def){
+ const N=def.steps.length;
+ this.host=host;let t=0,play=false,speed=1,last=0,stageIdx=-1;
+ host.classList.add('sc-wrap');
+ host.innerHTML=`<canvas></canvas><div class="sc-ctl"><button class="btn">▶ Запустить</button><input type="range" min="0" max="${(N-1)*100}" value="0"><select><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></div><ol class="steps">${def.steps.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+ const cv=host.querySelector('canvas'),btn=host.querySelector('button'),sl=host.querySelector('input'),se=host.querySelector('select'),lis=[...host.querySelectorAll('li')];
+ const dpr=Math.min(2,window.devicePixelRatio||1);cv.width=640*dpr;cv.height=340*dpr;const c=cv.getContext('2d');
+ btn.onclick=()=>{if(t>=N-1){t=0}play=!play;btn.textContent=play?'⏸ Пауза':'▶ Запустить'};
+ sl.oninput=()=>{t=sl.value/100;play=false;btn.textContent='▶ Запустить'};
+ se.onchange=()=>speed=+se.value;
+ const self=this;
+ this.frame=function(ts){const dt=Math.min(.05,(ts-last)/1000);last=ts;
+  if(play){t+=dt*speed/2.4;if(t>=N-1){t=N-1;play=false;btn.textContent='↻ Ещё раз'}sl.value=t*100}
+  draw(ts/1000)};
+ function draw(T){
+  c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,640,340);
+  const g=c.createLinearGradient(0,0,0,340);g.addColorStop(0,'#fbfcff');g.addColorStop(1,'#eef1fb');c.fillStyle=g;c.fillRect(0,0,640,340);
+  let i=Math.min(Math.floor(t),N-2);const u=t-i;const p=easeIO(clamp01((u-.25)/.75));
+  const amp=def.shake?bump(t,def.shake[0],def.shake[1])*3.2:0;
+  const P={};
+  def.atoms.forEach((a,n)=>{const A=kf(a.k,i),B=kf(a.k,i+1);let x=lrp(A[0],B[0],p),y=lrp(A[1],B[1],p);
+   const al=lrp(A[2]===undefined?1:A[2],B[2]===undefined?1:B[2],p);
+   if(amp){x+=amp*Math.sin(T*38+n*1.7);y+=amp*Math.cos(T*33+n*2.3)}
+   let lab=a.lab?(p<.5?kf(a.lab,i):kf(a.lab,i+1)):(a.el==='G'?'':a.el);P[a.id]={x,y,al,el:a.el,lab}});
+  if(def.bg)def.bg(c,t,T);
+  def.bonds.forEach(b=>{const o=lrp(kf(b.o,i),kf(b.o,i+1),p);if(o<.04)return;const A=P[b.a],B=P[b.b];const al=Math.min(A.al,B.al);if(al<.05)return;
+   const dx=B.x-A.x,dy=B.y-A.y,l=Math.hypot(dx,dy)||1,nx=-dy/l,ny=dx/l;const n=Math.ceil(o-.001);
+   for(let k=0;k<n;k++){const off=(k-(n-1)/2)*8;const part=(k===n-1)?Math.min(1,o-(n-1)):1;
+    c.globalAlpha=al*Math.max(.25,part);c.strokeStyle=b.col||'#2a2f3d';c.lineWidth=4.5;c.lineCap='round';
+    c.setLineDash(part<.98?[7,6]:[]);c.beginPath();c.moveTo(A.x+nx*off,A.y+ny*off);c.lineTo(B.x+nx*off,B.y+ny*off);c.stroke()}
+   c.setLineDash([]);c.globalAlpha=1});
+  (def.hot||[]).forEach(h=>{const a=bump(t,h.t[0],h.t[1]);if(!a)return;h.ids.forEach(id=>{const q=P[id],r=EL[q.el].r+7+3*Math.sin(T*9);c.globalAlpha=a*.85;c.strokeStyle='#ff9f1a';c.lineWidth=4;c.shadowColor='#ff9f1a';c.shadowBlur=14;c.beginPath();c.arc(q.x,q.y,r,0,7);c.stroke();c.shadowBlur=0;c.globalAlpha=1})});
+  def.atoms.forEach(a=>{const q=P[a.id];if(q.al<.02)return;const e=EL[a.el],r=e.r;c.globalAlpha=q.al;
+   c.shadowColor='rgba(30,36,51,.28)';c.shadowBlur=9;c.shadowOffsetY=3;c.fillStyle=e.c;c.beginPath();c.arc(q.x,q.y,r,0,7);c.fill();c.shadowBlur=0;c.shadowOffsetY=0;
+   const hg=c.createRadialGradient(q.x-r*.4,q.y-r*.45,1,q.x-r*.2,q.y-r*.25,r*1.05);hg.addColorStop(0,'rgba(255,255,255,.65)');hg.addColorStop(1,'rgba(255,255,255,0)');c.fillStyle=hg;c.beginPath();c.arc(q.x,q.y,r,0,7);c.fill();
+   if(a.el==='H'){c.strokeStyle='#8a94a6';c.lineWidth=1.5;c.beginPath();c.arc(q.x,q.y,r,0,7);c.stroke()}
+   c.fillStyle=e.t;c.font=`bold ${a.el==='G'?19:a.el==='H'?15:18}px system-ui,Segoe UI,Arial`;c.textAlign='center';c.textBaseline='middle';c.fillText(q.lab,q.x,q.y+1);c.globalAlpha=1});
+  if(def.fx)def.fx(c,t,T,P);
+  const idx=Math.min(N-1,u>.55?i+1:i);if(t>=N-1)stageIdx!==N-1&&0;
+  const si=t>=N-1?N-1:idx;if(si!==stageIdx){stageIdx=si;lis.forEach((l,k)=>l.classList.toggle('on',k===si))}
+ }
+ SCN.push(this);
+}
+const BB=(a,b,o,col)=>({a,b,o,col});
+const AT=(id,el,k,lab)=>({id,el,k,lab});
+const scenes={
+'Замещение':()=>({title:'CH₄ + Cl₂ →(hν) CH₃Cl + HCl',
+ steps:['Метан и хлор. Все связи на месте.','Свет (hν) рвёт молекулу Cl₂ на два атома хлора — радикалы.','Атом хлора налетает на атом водорода метана.','Связь C–H рвётся: H уходит с хлором (получается HCl), а второй Cl садится на углерод.','Готово: хлорметан CH₃Cl и HCl. Один H заменён на Cl — это <b>замещение</b>.'],
+ atoms:[AT('C','C',[[170,170]]),AT('H1','H',[[170,105]]),AT('H2','H',[[105,170]]),AT('H3','H',[[170,235]]),
+  AT('H4','H',[[235,170],[235,170],[235,170],[335,115],[470,55]]),
+  AT('Ca','Cl',[[480,115],[450,120],[282,170],[385,95],[520,55]]),
+  AT('Cb','Cl',[[548,115],[580,100],[520,130],[258,170],[258,170]])],
+ bonds:[BB('C','H1',[1]),BB('C','H2',[1]),BB('C','H3',[1]),BB('C','H4',[1,1,1,0,0]),BB('Ca','Cb',[1,0,0,0,0]),BB('H4','Ca',[0,0,.4,1,1]),BB('C','Cb',[0,0,0,1,1])],
+ hot:[{t:[.7,1.7],ids:['Ca','Cb']},{t:[1.7,3.3],ids:['H4','Ca']}],
+ fx:(c,t)=>{const a=bump(t,.3,1.8);if(a){c.save();c.globalAlpha=a;c.strokeStyle='#f5b800';c.lineWidth=5;c.lineCap='round';c.lineJoin='round';
+  for(let k=0;k<3;k++){const x=500+k*40,y=8;c.beginPath();c.moveTo(x,y);c.lineTo(x-12,y+26);c.lineTo(x+4,y+30);c.lineTo(x-8,y+58);c.stroke()}
+  c.fillStyle='#d99500';c.font='bold 20px system-ui';c.textAlign='left';c.fillText('hν  (свет)',440,80);c.restore()}}}),
+'Присоединение':()=>({title:'CH₂=CH₂ + H₂ →(Ni) CH₃–CH₃',
+ steps:['Этен и водород. Между атомами C двойная связь: прочная σ и слабая π.','На поверхности никеля молекула H₂ распадается на атомы.','Слабая π-связь рвётся, атомы H садятся на оба углерода.','Готово: этан. Связь C–C стала одинарной — это <b>присоединение</b>.'],
+ atoms:[AT('C1','C',[[250,220]]),AT('C2','C',[[350,220]]),AT('Ha','H',[[290,95],[245,62],[250,150],[250,150]]),AT('Hb','H',[[335,95],[355,62],[350,150],[350,150]]),
+  AT('L1','H',[[200,170],[200,170],[200,175],[190,185]]),AT('L2','H',[[200,270],[200,270],[200,265],[190,255]]),AT('R1','H',[[400,170],[400,170],[400,175],[410,185]]),AT('R2','H',[[400,270],[400,270],[400,265],[410,255]])],
+ bonds:[BB('C1','C2',[2,2,1.4,1]),BB('Ha','Hb',[1,.2,0,0]),BB('C1','Ha',[0,0,.8,1]),BB('C2','Hb',[0,0,.8,1]),BB('C1','L1',[1]),BB('C1','L2',[1]),BB('C2','R1',[1]),BB('C2','R2',[1])],
+ hot:[{t:[.8,2.4],ids:['C1','C2']}],
+ bg:(c,t,T)=>{const g=c.createLinearGradient(0,14,0,38);g.addColorStop(0,'#9aa8c4');g.addColorStop(1,'#6b7a99');c.fillStyle=g;c.beginPath();c.roundRect?c.roundRect(150,14,340,26,8):c.rect(150,14,340,26);c.fill();c.fillStyle='#fff';c.font='bold 14px system-ui';c.textAlign='center';c.textBaseline='middle';c.fillText('катализатор Ni',320,28)},
+ fx:(c,t)=>{const a=clamp01(1-(t-1.4)/.8)*(t>.3?1:t/.3);if(a>0){c.save();c.globalAlpha=a;c.fillStyle='#7c3aed';c.font='bold 17px system-ui';c.textAlign='center';c.fillText('π-связь',300,262+14);c.strokeStyle='#7c3aed';c.lineWidth=2;c.beginPath();c.moveTo(262,262);c.quadraticCurveTo(300,246,338,262);c.stroke();c.restore()}}}),
+'Отщепление':()=>({title:'CH₃CH₂OH →(H₂SO₄, 170 °C) CH₂=CH₂ + H₂O',
+ steps:['Этанол CH₃–CH₂–OH.','Нагрев до 170 °C с концентрированной H₂SO₄: молекулу «трясёт».','Связи C–O и C–H ослабевают.','H от одного углерода и группа OH от соседнего тянутся друг к другу.','Уходит вода H₂O, между углеродами появилась двойная связь: этен. Это <b>отщепление</b>.'],
+ atoms:[AT('C1','C',[[200,210]]),AT('C2','C',[[310,210]]),
+  AT('Hx','H',[[205,140],[205,140],[230,105],[345,98],[445,40]]),AT('Hy','H',[[145,175],[145,175],[145,175],[145,175],[140,160]]),AT('Hz','H',[[145,245],[145,245],[145,245],[145,245],[140,260]]),
+  AT('Hp','H',[[310,280],[310,280],[310,280],[310,280],[365,262]]),AT('Hq','H',[[370,255],[370,255],[370,255],[370,255],[365,158]]),
+  AT('O','O',[[375,140],[375,140],[385,132],[380,128],[480,70]]),AT('Ho','H',[[440,108],[440,108],[445,100],[430,98],[545,38]])],
+ bonds:[BB('C1','C2',[1,1,1,1.4,2]),BB('C2','O',[1,1,.55,.2,0]),BB('C1','Hx',[1,1,.6,.2,0]),BB('Hx','O',[0,0,0,.6,1]),BB('O','Ho',[1]),BB('C1','Hy',[1]),BB('C1','Hz',[1]),BB('C2','Hp',[1]),BB('C2','Hq',[1])],
+ shake:[.4,1.9],hot:[{t:[1.7,3.8],ids:['O','Hx']}],
+ bg:(c,t,T)=>{const a=bump(t,.15,2.6);if(a>0){c.save();c.globalAlpha=Math.min(1,a*1.6);for(let k=0;k<9;k++){const x=70+k*55,h=34+14*Math.sin(T*9+k*1.3);const g=c.createLinearGradient(0,340,0,340-h);g.addColorStop(0,'#ff6a00');g.addColorStop(1,'rgba(255,200,0,0)');c.fillStyle=g;c.beginPath();c.moveTo(x-20,340);c.quadraticCurveTo(x-6,340-h*.6,x,340-h);c.quadraticCurveTo(x+6,340-h*.6,x+20,340);c.fill()}
+  c.fillStyle='#c2410c';c.font='bold 16px system-ui';c.textAlign='left';c.fillText('t = 170 °C, H₂SO₄ (конц.)',16,26);c.restore()}}}),
+'Правило Марковникова':()=>({title:'CH₂=CH–CH₃ + HBr → CH₃–CHBr–CH₃',
+ steps:['Пропен и HBr. У крайнего CH₂ два атома H, у среднего CH — один.','HBr подходит к двойной связи (к π-электронам).','H⁺ присоединяется к CH₂ — туда, где водорода больше. На соседнем атоме остаётся «+».','Бромид-ион Br⁻ садится на положительный атом.','Продукт — 2-бромпропан: бром на среднем атоме. «Богатый богатеет» — это <b>правило Марковникова</b>.'],
+ atoms:[AT('C1','G',[[140,225]],['CH₂','CH₂','CH₂','CH₃','CH₃']),AT('C2','G',[[260,225]],['CH']),AT('C3','G',[[380,225]],['CH₃']),
+  AT('H','H',[[520,80],[330,120],[150,165],[140,222,0],[140,222,0]]),AT('Br','Br',[[580,80],[400,110],[430,120],[262,135],[262,135]])],
+ bonds:[BB('C1','C2',[2,2,1.3,1,1]),BB('C2','C3',[1]),BB('H','Br',[1,.5,0,0,0]),BB('H','C1',[0,0,.5,0,0]),BB('Br','C2',[0,0,0,1,1])],
+ hot:[{t:[1,2.3],ids:['H']},{t:[2.2,3.4],ids:['C2','Br']}],
+ fx:(c,t)=>{let a=clamp01(1-(t-1.6)/.6);if(a>0){c.save();c.globalAlpha=a;c.font='bold 14px system-ui';c.textAlign='center';c.fillStyle='#2563eb';c.fillText('H больше',140,275);c.fillStyle='#667085';c.fillText('H меньше',260,275);c.restore()}
+  a=bump(t,1.7,3.3);if(a>0){c.save();c.globalAlpha=Math.min(1,a*1.5);c.fillStyle='#d97706';c.font='bold 34px system-ui';c.textAlign='center';c.fillText('+',298,180);c.restore()}
+  a=bump(t,1.5,3.4);if(a>0){c.save();c.globalAlpha=Math.min(1,a*1.5);c.fillStyle='#a0522d';c.font='bold 22px system-ui';c.fillText('Br⁻',452,102);c.restore()}}})};
+let scCur='Замещение',scObj=null;
+function rxInit(){const ch=$('#scChips');if(!ch.dataset.done){ch.dataset.done=1;ch.innerHTML=Object.keys(scenes).map(k=>`<div class="chip" data-k="${k}" onclick="scPick('${k}')">${k}</div>`).join('')}scPick(scCur)}
+function scPick(k){scCur=k;document.querySelectorAll('#scChips .chip').forEach(c=>c.classList.toggle('on',c.dataset.k===k));
+ const d=scenes[k]();$('#scTitle').textContent=d.title;
+ if(scObj){const n=SCN.indexOf(scObj);if(n>=0)SCN.splice(n,1)}
+ scObj=new Scene($('#scHost'),d)}
+
 /* ---------- fullscreen ---------- */
 function toggleFs(){const d=document,e=d.documentElement;
  if(d.fullscreenElement||d.webkitFullscreenElement){(d.exitFullscreen||d.webkitExitFullscreen).call(d)}
